@@ -30,7 +30,8 @@ The following non-native Python packages are required:
 
 ## Quickstart
 
-Almost all the code in this package is built to work with, on, or within a Corpus object. The `Corpus` class is defined in the file formulaic_mechanics.py. To instantiate a `Corpus` object, you can simply run this line of code:
+Almost all the code in this package is built to work with, on, or within a Corpus object. The `Corpus` class is 
+defined in the file `corpus.py`. To instantiate a `Corpus` object, you can simply run this line of code:
 
 `Corpus = Corpus()`
 

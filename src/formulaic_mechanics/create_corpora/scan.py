@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # This code was written by Hope Ranker (https://github.com/epilanthanomai/hexameter/tree/master) 
 import unicodedata
-import hexameter
+from . import hexameter
 
 ###
 ### constants and handy definitions

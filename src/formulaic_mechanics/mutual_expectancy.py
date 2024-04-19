@@ -1,6 +1,6 @@
 import statistics
 import pandas as pd
-import helpers
+from . import helpers
 
 
 def expectancy(phrase, expectancies):

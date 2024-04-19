@@ -1,7 +1,7 @@
 import pandas as pd
 from collections import defaultdict
 from statistics import geometric_mean
-import mutual_expectancy
+from . import mutual_expectancy
 
 
 def count_bigrams(corpus, quiet=False):

@@ -1,5 +1,5 @@
 import os
-from formulaic_mechanics.create_corpora import scan
+from . import scan
 import csv
 
 def make_unformatted_meter_files():

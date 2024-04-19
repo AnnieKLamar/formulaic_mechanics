@@ -1,23 +1,20 @@
+"""Main class for all Corpus functions."""
 import glob
 import os
 from collections import defaultdict
 import pandas as pd
 # package files
-import helpers
-import line_sets as ls
-import meter_mechanics
-import mutual_expectancy as me
-import n_grams
-import vocabulary
-
+from . import helpers
+from . import line_sets as ls
+from . import meter_mechanics
+from . import mutual_expectancy as me
+from . import n_grams
+from . import vocabulary
 
 class Corpus:
 
     def __init__(self, quiet=True):
 
-        ####################
-        # Create core corpus
-        ####################
         path = os.getcwd() + '\data' + '\corpora' + '\clean_files'
         text_files = glob.glob(os.path.join(path, "*.txt"))
         corpus_header = ['text', 'book', 'line', 'string']
@@ -25,7 +22,9 @@ class Corpus:
         for file in text_files:
             if not quiet:
                 print('File Name:', file.split("\\")[-1])
+
             # setting up text and book for each file
+
             text = ""
             if 'iliad' in file:
                 text = 'iliad'
@@ -34,7 +33,9 @@ class Corpus:
             book = file[-12:-10]
             if str(book).startswith('0'):
                 book = book[-1]
+
             # open and read file
+
             open_file = open(file, 'r', encoding='utf8')
             file_lines = open_file.readlines()
             line_number = 1
@@ -50,9 +51,8 @@ class Corpus:
 
         self.corpus = pd.DataFrame(all_lines, columns=corpus_header)
 
-        ##################
         # N-gram Variables
-        ##################
+
         self.bigrams = n_grams.count_bigrams(self.corpus, quiet=True)
 
         if not os.path.isfile('data/bigram_frequencies.csv'):
@@ -83,9 +83,8 @@ class Corpus:
         if not quiet:
             print("Quadgram expectancies loaded.")
 
-        ###################
         # Mutual Expectancy
-        ###################
+
         if not os.path.isfile('data/me_by_book_geometric.csv'):
             self.me_by_book_geometric = me.me_by_book_geometric(self.corpus, self.expectancies)
         else:
@@ -114,9 +113,8 @@ class Corpus:
         if not quiet:
             print("Mutual expectancies by meter (arithmetic) loaded.")
 
-        ############
         # Vocabulary
-        ############
+
         if not os.path.isfile('data/counted_words.csv'):
             self.counted_words = vocabulary.count_words(self.corpus)
         else:
@@ -165,9 +163,8 @@ class Corpus:
         if not quiet:
             print("Proper noun statistics loaded.")
 
-        ###########
         # Line Sets
-        ###########
+
         if not os.path.isfile('data/repeated_line_sets.csv'):
             self.repeated_line_sets = ls.find_repeated_line_sets(self.full_corpus, self.expectancies)
         else:
@@ -175,9 +172,8 @@ class Corpus:
         if not quiet:
             print("Repeated line sets loaded.")
 
-        #######
         # Meter
-        #######
+
         if not os.path.isfile('data/metrical_pattern_counts.csv'):
             self.metrical_pattern_counts = meter_mechanics.full_metrical_distribution(self.full_corpus)
         else:
@@ -193,16 +189,14 @@ class Corpus:
             print("Hemistiches loaded.")
         print("All datasets loaded.")
 
-        ####################
         # Special DataFrames
-        ####################
+
         self.iliad2 = self.full_corpus[(self.full_corpus['book'] == 2) & (self.full_corpus['text'] == 'iliad')]
         self.iliad2_catalogue = self.iliad2[(self.iliad2.line >= 494) & (self.iliad2.line <= 759)]
         self.iliad2_not_catalogue = self.iliad2[(self.iliad2.line < 494) | (self.iliad2.line > 759)]
 
-    ########################
     # Corpus support methods
-    ########################
+
     def count_phrase_occurrences(self, phrase):
         """
         Counts how many times a phrase appears in the corpus.

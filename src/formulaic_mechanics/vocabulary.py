@@ -1,4 +1,4 @@
-import helpers
+from . import helpers
 import pandas as pd
 import math
 from lexical_diversity import lex_div as ld

@@ -1,6 +1,6 @@
 from collections import defaultdict
 import pandas as pd
-import mutual_expectancy as me
+from . import mutual_expectancy as me
 
 
 def find_repeated_line_sets(corpus, bigram_expectancies, to_file=True):
